@@ -19,6 +19,7 @@ const Navbar = () => {
           className='font-extrabold text-teal-900 text-3xl tracking-wider capitalize text-center flex items-center'
         >
           Exponential Everyday
+          <p>I am in master.</p>
         </Link>
       </div>
 
