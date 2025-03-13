@@ -1,0 +1,4 @@
+To-Do for 03/13
+1: Get authentication set-up
+2: Get Prisma set-up
+3: Write down all the pnpm commands for nextJs, authJs, prisma, shadcn and Luxon.
