@@ -9,7 +9,8 @@ const DashboardPage = () => {
         <div className='col-span-3'>
           <div className='grid lg:grid-cols-3 grid-cols-1 gap-3'>
             <div className='bg-teal-50 rounded-xl shadow col-span-1 lg:col-span-2 h-44'>
-              1
+              <h1>82%</h1>
+              <h2>Your Average in Getting better.</h2>
             </div>
             <div className='bg-teal-50 rounded-xl shadow col-span-1 lg:col-start-3 h-44'>
               2

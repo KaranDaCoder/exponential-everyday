@@ -1,16 +1,13 @@
 'use client';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { Button } from '../ui/button';
-import {
-  UserIcon,
-} from 'lucide-react';
+import { UserIcon } from 'lucide-react';
 import HabitDrawer from './HabitDrawer';
 import { usePathname } from 'next/navigation';
 import { navinks } from '@/lib/navinks';
 
 const Navbar = () => {
- const pathName = usePathname();
+  const pathName = usePathname();
   return (
     <nav className='py-2 flex justify-between items-center sticky top-0 bg-stone-200 z-50'>
       <div className=''>
