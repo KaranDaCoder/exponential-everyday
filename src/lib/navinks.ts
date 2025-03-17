@@ -1,4 +1,4 @@
-export const navinks = [
+export const navLinksTop = [
  {
   href: '/dashboard',
   label : 'Dashboard',
@@ -10,5 +10,23 @@ export const navinks = [
  {
   href: '/my-activity',
   label : 'My Activity',
+ },
+ {
+  href: '/my-profile',
+  label : 'My Profile',
+ },
+]
+export const navLinksBottom = [
+ {
+  href: '/help',
+  label : 'Help',
+ },
+ {
+  href: '/about',
+  label : 'About',
+ },
+ {
+  href: '/logout',
+  label : 'Logout',
  },
 ]

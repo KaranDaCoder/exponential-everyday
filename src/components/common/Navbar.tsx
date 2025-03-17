@@ -1,13 +1,14 @@
-'use client';
 import Link from 'next/link';
-import React, { useState } from 'react';
-import { User, UserIcon } from 'lucide-react';
-import HabitDrawer from './HabitDrawer';
-import { usePathname } from 'next/navigation';
+import MobileNavDrawer from './MobileNavDrawer';
+import UserDropDown from './UserDropDown';
+import { auth, signIn } from '@/lib/auth/auth';
+import LoginSignUp from './LoginSignUp';
 
-const Navbar = () => {
+
+const Navbar = async() => {
+  const session = await auth();
   return (
-    <nav className='py-4 z-50 flex items-center justify-between sticky top-0'>
+    <nav className='h-16 z-50 flex items-center justify-between sticky top-0'>
       <Link
         href={'/'}
         className='uppercase text-xl font-semibold tracking-widest flex'
@@ -20,8 +21,11 @@ const Navbar = () => {
         </span>
       </Link>
 
-      <div className="">
-      <User className='w-10 h-10 p-1 rounded-full border'/>
+      <div className="hidden lg:block">
+      {session ? <UserDropDown userImg={session.user?.image!}/> : <LoginSignUp/>}
+      </div>
+      <div className="block lg:hidden">
+      {session ? <MobileNavDrawer/> : <LoginSignUp/>}
       </div>
     </nav>
   );
