@@ -1,16 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/common/Navbar";
+import { Separator } from "@/components/ui/separator";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 });
 
 export const metadata: Metadata = {
@@ -26,11 +22,15 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} bg-stone-200 text-stone-950 subpixel-antialiased text-balance`}
+        className={`${montserrat.className} bg-white text-teal-900`}
       >
-        <div className='overflow-x-hidden h-screen mx-auto container px-4 lg:px-0'>
+        <div className='overflow-x-hidden mx-auto container px-4 lg:px-0'>
           <Navbar />
           {children}
+        <Separator/>
+        <div className="h-10 text-sm flex items-center justify-center">
+          <footer>Footer Content</footer>
+        </div>
         </div>
       </body>
     </html>

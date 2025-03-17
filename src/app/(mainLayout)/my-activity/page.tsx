@@ -4,7 +4,6 @@ import React from 'react'
 const MyActivity = () => {
   return (
     <div>
-      <PageHeader header='Activity' />
     </div>
   )
 }
