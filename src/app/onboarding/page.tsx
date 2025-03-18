@@ -17,10 +17,10 @@ const OnboardingPage = async () => {
           </span>
         </h1>
         <OnboardingForm/>
-        <div className='w-full mt-5 text-center'>
-          <p className='w-full text-sm italic'>
-            You can update these details anytime in your profile
-          </p>
+        <div className='w-full px-4 mt-4 space-y-1'>
+          <h2 className='text-sm font-semibold'>Note:</h2>
+          <li className='text-sm italic'>You can update these details anytime in your profile</li>
+          <li className='text-sm italic'>Display name should be between 3 and 15 letters. Spaces or special characters not allowed.</li>
         </div>
       </div>
     </div>

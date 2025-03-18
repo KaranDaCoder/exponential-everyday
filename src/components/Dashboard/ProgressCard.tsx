@@ -8,7 +8,7 @@ interface IProgressCard {
 const ProgressCard = ({bgColor, count, total, label} : IProgressCard) => {
   return (
     <div
-      className={`${bgColor} border-2 border-teal-900 rounded-md hover:shadow-2xl hover:-rotate-3 transition-all py-1 lg:py-0`}
+      className={`${bgColor} border-2 border-teal-900 rounded-md hover:shadow-2xl hover:bg-white hover:-rotate-2 transition-all py-1 lg:py-0`}
     >
       <div className='flex flex-col items-center justify-center'>
         <h1 className='inline-flex items-center justify-center gap-2'>

@@ -3,7 +3,6 @@ import React from 'react';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
-import { Checkbox } from '../ui/checkbox';
 import { Button } from '../ui/button';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Switch } from '@/components/ui/switch';
@@ -11,7 +10,6 @@ import { handleUserOnboarding } from '@/actions/user';
 import {z} from "zod";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { userOnboardingSchema } from '@/lib/zodSchemas';
-import { Router } from 'next/router';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { LoaderIcon } from 'lucide-react';
@@ -43,9 +41,9 @@ const OnboardingForm = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className='space-y-2'>
-        <Label className='text-lg'>What should we call you?</Label>
+        <Label className='text-lg'>What should be your display name?</Label>
         <Input
-          placeholder='e.x : Potato'
+          placeholder='e.x : CouchPotato'
           className='focus-visible:ring-1 focus-visible:ring-teal-950 ring-1 ring-teal-900'
           {...register('displayName')}
         />
@@ -54,11 +52,11 @@ const OnboardingForm = () => {
         )}
       </div>
       <div className='space-y-2'>
-        <Label className='text-lg'>Tell us a bit about yourself.</Label>
+        <Label className='text-lg'>Tell us how motivated you feel getting better.</Label>
         <Textarea
           placeholder='potato'
           className='focus-visible:ring-1 focus-visible:ring-teal-950 ring-1 ring-teal-900'
-          {...register('bio', { required: false, maxLength: 350 })}
+          {...register('bio', { required: false})}
         />
       </div>
       <div className='flex items-center justify-between space-y-2'>
