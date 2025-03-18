@@ -13,8 +13,13 @@ model User {
   email         String          @unique
   emailVerified DateTime?
   image         String?
+  isAdmin       Boolean @default(false)
+  bio           String? @db.VarChar(250)
+  reports       Boolean @default(false)
   accounts      Account[]
   sessions      Session[]
+
+
 
  
   createdAt DateTime @default(now())

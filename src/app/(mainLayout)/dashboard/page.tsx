@@ -1,8 +1,12 @@
 import PageHeader from "@/components/common/PageHeader";
 import ProgressCard from "@/components/Dashboard/ProgressCard";
 import Welcome from "@/components/Dashboard/Welcome";
+import { auth } from "@/lib/auth/auth";
+import { use } from "react";
 
-const DashboardPage = () => {
+const DashboardPage = async() => {
+  const user = await auth();
+  
   return (
     <div className=''>
       <PageHeader header='Dashboard' />
@@ -12,7 +16,7 @@ const DashboardPage = () => {
         <Welcome username='Potato' />
 
         {/* PROGRESS CARDS */}
-        <div className='lg:w-3/4 w-full gap-3 grid lg:grid-cols-2 grid-cols-1'>
+        <div className='grid w-full grid-cols-1 gap-3 lg:w-3/4 lg:grid-cols-2'>
           {/* Card-1 : STRENGTH */}
           <ProgressCard
             bgColor='bg-green-100'
