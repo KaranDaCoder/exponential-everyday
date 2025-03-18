@@ -3,6 +3,7 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/common/Navbar";
 import { Separator } from "@/components/ui/separator";
+import { Toaster } from 'sonner';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -21,16 +22,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body
-        className={`${montserrat.className} bg-white text-teal-950`}
-      >
-        <div className='overflow-x-hidden mx-auto container px-4 lg:px-0'>
+      <body className={`${montserrat.className} bg-white text-teal-950`}>
+        <div className='container px-4 mx-auto overflow-x-hidden lg:px-0'>
           <Navbar />
           {children}
-        <Separator/>
-        <div className="h-10 text-sm flex items-center justify-center">
-          <footer>Footer Content</footer>
-        </div>
+          <Separator />
+          <div className='flex items-center justify-center h-10 text-sm'>
+            <footer>Footer Content</footer>
+          </div>
+          <Toaster richColors position="top-right" duration={5000} />
         </div>
       </body>
     </html>

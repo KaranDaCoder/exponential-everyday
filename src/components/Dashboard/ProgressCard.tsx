@@ -10,19 +10,19 @@ const ProgressCard = ({bgColor, count, total, label} : IProgressCard) => {
     <div
       className={`${bgColor} border-2 border-teal-900 rounded-md hover:shadow-2xl hover:-rotate-3 transition-all py-1 lg:py-0`}
     >
-      <div className='flex flex-col items-center justify-center h-full'>
+      <div className='flex flex-col items-center justify-center'>
         <h1 className='inline-flex items-center justify-center gap-2'>
-          <span className='text-6xl lg:text-7xl font-medium tracking-wide'>
+          <span className='text-6xl font-medium tracking-wide lg:text-7xl'>
             {(!label.includes('target')) ?  count : <span>{count}%</span>}
           </span>
           {(!label.includes('target')) && <span className='text-lg lg:text-xl'>of</span>}
           {(!label.includes('target')) && (
-            <span className='text-2xl lg:text-4xl font-light text-muted-foreground'>
+            <span className='text-2xl font-light lg:text-4xl text-muted-foreground'>
               {total}
             </span>
           )}
         </h1>
-        <h2 className='capitalize text-lg font-medium tracking-wider text-center'>
+        <h2 className='text-lg font-medium tracking-wider text-center capitalize'>
           {label}
         </h2>
       </div>

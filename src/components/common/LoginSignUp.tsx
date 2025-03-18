@@ -8,7 +8,7 @@ const LoginSignUp = () => {
       <form
         action={async() => {
           'use server'
-          await signIn("google", {redirectTo: '/dashboard'});
+          await signIn("google", {redirectTo: '/onboarding'});
         }}
       >
         <Button type='submit'>signup/Login</Button>
