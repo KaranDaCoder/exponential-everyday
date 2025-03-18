@@ -5,13 +5,12 @@ import { navLinksBottom, navLinksTop } from '@/lib/navinks';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
-import { SheetClose } from '../ui/sheet';
 
 const Sidebar = () => {
   const pathName = usePathname();
   return (
-    <aside className='h-full p-2 flex flex-col gap-3'>
-      <div className='h-3/4 flex flex-col items-start justify-start gap-y-4 my-24'>
+    <aside className='flex flex-col h-full gap-3 p-2'>
+      <div className='flex flex-col items-start justify-start my-24 h-3/4 gap-y-4'>
         {/* <Separator/> */}
         {navLinksTop.map((link) => (
           <Link
@@ -29,7 +28,7 @@ const Sidebar = () => {
         <HabitDrawer />
       </div>
 
-      <div className='h-1/4 flex gap-1 flex-col items-start justify-end'>
+      <div className='flex flex-col items-start justify-end gap-1 h-1/4'>
         <Separator />
 
         {navLinksBottom.map((link) => (
@@ -37,7 +36,7 @@ const Sidebar = () => {
           <Link
             href={link.href}
             key={link.href}
-            className='py-4 uppercase  w-full px-4 tracking-wider bg-white text-teal-900'
+            className='w-full px-4 py-4 tracking-wider text-teal-900 uppercase bg-white'
           >
             {link.label}
           </Link>

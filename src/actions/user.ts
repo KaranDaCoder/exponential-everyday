@@ -30,7 +30,7 @@ export const validateUserOnboardingStatus = async () => {
 export const handleUserOnboarding = async (
   data: z.infer<typeof userOnboardingSchema>
 ) => {
-  const validateData = userOnboardingSchema.safeParse(data);
+  // const validateData = userOnboardingSchema.safeParse(data);
 
   const session = await auth();
 

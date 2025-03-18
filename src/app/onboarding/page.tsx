@@ -4,14 +4,14 @@ import { redirect } from 'next/navigation';
 import OnboardingForm from '@/components/Onboarding/OnboardingForm';
 
 const OnboardingPage = async () => {
-  const user = await validateSession();
+ await validateSession();
   const { message } = await validateUserOnboardingStatus();
   if (message) redirect('/dashboard');
   return (
     <div className='h-[calc(100dvh-7.5rem)] max-w-7xl mx-auto flex items-center justify-center gap-x-4'>
       <div className='w-full py-4 border-2 border-teal-900 rounded-md shadow h-5/6 lg:w-1/2 '>
         <h1 className='flex flex-col gap-1 text-2xl font-medium text-center capitalize'>
-          Hi! Let's get you quickly onboarded.
+          Hi! Let us get you quickly onboarded.
           <span className='text-sm text-muted-foreground'>
             (Its just one time. Trust us.)
           </span>

@@ -3,7 +3,6 @@ import { validateUserOnboardingStatus } from '@/actions/user';
 import PageHeader from '@/components/common/PageHeader';
 import ProgressCard from '@/components/Dashboard/ProgressCard';
 import Welcome from '@/components/Dashboard/Welcome';
-import { auth } from '@/lib/auth/auth';
 import { validateSession } from '@/lib/auth/validateSession';
 import { redirect } from 'next/navigation';
 
