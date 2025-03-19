@@ -25,7 +25,7 @@ const Navbar = async() => {
       {session ? <UserDropDown userImg={session.user?.image ? session.user.image : "" }/> : <LoginSignUp/>}
       </div>
       <div className="block lg:hidden">
-      {session ? <MobileNavDrawer/> : <LoginSignUp/>}
+      {session ? <MobileNavDrawer /> : <LoginSignUp/>}
       </div>
     </nav>
   );

@@ -24,9 +24,5 @@ export const navLinksBottom = [
  {
   href: '/about',
   label : 'About',
- },
- {
-  href: '/logout',
-  label : 'Logout',
- },
+ }
 ]

@@ -11,26 +11,28 @@ import { Separator } from '../ui/separator';
 import Link from 'next/link';
 import { navLinksBottom, navLinksTop } from '@/lib/navinks';
 import HabitDrawer from './HabitDrawer';
+import { Button } from '../ui/button';
+import { signOut } from '@/lib/auth/auth';
 
 
 const MobileNavDrawer = () => {
   return (
     <Sheet>
       <SheetTrigger>
-        <AlignRightIcon className='cursor-pointer'/>
+        <AlignRightIcon className='cursor-pointer' />
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
           <SheetTitle className='flex'>
-            <span className='px-2 py-1 border-2 flex rounded-l-md border-teal-900 bg-teal-900 text-teal-50'>
+            <span className='flex px-2 py-1 bg-teal-900 border-2 border-teal-900 rounded-l-md text-teal-50'>
               Exponential
             </span>
-            <span className='px-2 py-1 border-2 flex rounded-r-md border-teal-900 bg-white text-teal-900'>
+            <span className='flex px-2 py-1 text-teal-900 bg-white border-2 border-teal-900 rounded-r-md'>
               Everyday
             </span>
           </SheetTitle>
-          <aside className='h-full p-2 flex flex-col gap-3'>
-            <div className='h-3/4 flex flex-col items-start justify-start gap-y-4 my-14'>
+          <aside className='flex flex-col h-full gap-3 p-2'>
+            <div className='flex flex-col items-start justify-start h-3/4 gap-y-4 my-14'>
               {navLinksTop.map((link) => (
                 <SheetClose asChild key={link.label}>
                   <Link
@@ -45,21 +47,36 @@ const MobileNavDrawer = () => {
               <HabitDrawer />
             </div>
 
-            <div className='h-1/4 flex flex-col items-start justify-end'>
+            <div className='flex flex-col items-start justify-end h-1/4'>
               <Separator />
 
               {navLinksBottom.map((link) => (
-               <SheetClose asChild key={link.href}>
-                <Link
-                  href={link.href}
-                  key={link.href}
-                  className='py-3 uppercase  w-full px-4 tracking-wider bg-white text-teal-900'
-                >
-                  {link.label}
-                </Link>
-               </SheetClose>
+                <SheetClose asChild key={link.href}>
+                  <Link
+                    href={link.href}
+                    key={link.href}
+                    className='w-full px-4 py-3 tracking-wider text-teal-900 uppercase bg-white'
+                  >
+                    {link.label}
+                  </Link>
+                </SheetClose>
               ))}
             </div>
+            <SheetClose asChild>
+              <form
+                action={async () => {
+                  'use server';
+                  await signOut();
+                }}
+              >
+                <Button
+                  variant={'link'}
+                  className='px-4 py-4 text-base font-medium tracking-wider text-teal-900 uppercase bg-white hover:text-teal-700'
+                >
+                  LOGOUT
+                </Button>
+              </form>
+            </SheetClose>
           </aside>
         </SheetHeader>
       </SheetContent>

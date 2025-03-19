@@ -37,7 +37,7 @@ const OnboardingForm = () => {
  }
   return (
     <form
-      className='flex flex-col px-5 mt-10 space-y-8 lg:px-10'
+      className='flex flex-col px-5 mt-10 space-y-4 lg:px-10'
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className='space-y-2'>
