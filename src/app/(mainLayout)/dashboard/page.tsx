@@ -1,12 +1,8 @@
-// import { validateUserOnboardingStatus } from "@/actions/user";
 import { validateUserOnboardingStatus } from '@/actions/user';
 import PageHeader from '@/components/common/PageHeader';
 import ProgressCard from '@/components/Dashboard/ProgressCard';
 import Welcome from '@/components/Dashboard/Welcome';
-import { Switch } from '@/components/ui/switch';
-import { Textarea } from '@/components/ui/textarea';
 import { validateSession } from '@/lib/auth/validateSession';
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import ActiveHabitTrackerCard from '@/components/Dashboard/ActiveHabitTrackerCard';
 

@@ -13,8 +13,6 @@ import { navLinksBottom, navLinksTop } from '@/lib/navinks';
 import HabitDrawer from './HabitDrawer';
 import { Button } from '../ui/button';
 import { signOut } from '@/lib/auth/auth';
-import { validateUserOnboardingStatus } from '@/actions/user';
-import { redirect } from 'next/navigation';
 import { validateSession } from '@/lib/auth/validateSession';
 
 
