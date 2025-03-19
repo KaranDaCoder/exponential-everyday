@@ -63,15 +63,15 @@ const OnboardingForm = () => {
         />
       </div>
       <div className='flex items-center justify-between'>
-        <Label className='text-lg'>Get weekly progress reports?</Label>
+        <Label className='text-base'>Send weekly progress reports</Label>
         <Switch
           className='data-[state=checked]:bg-teal-800 cursor-pointer'
           onCheckedChange={(checked) => setValue('reports', checked)}
         />
       </div>
       <div className='flex items-center justify-between'>
-        <Label className='text-lg'>
-          Send me reminders to update my habit trackers
+        <Label className='text-base'>
+          Remind me to update habits daily
         </Label>
         <Switch
           className='data-[state=checked]:bg-teal-800 cursor-pointer'
