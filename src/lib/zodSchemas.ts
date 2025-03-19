@@ -19,4 +19,5 @@ export const userOnboardingSchema = z.object({
     .optional(),
 
   reports: z.boolean().default(false),
+  reminders: z.boolean().default(false),
 });

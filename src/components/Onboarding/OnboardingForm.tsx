@@ -23,7 +23,8 @@ const OnboardingForm = () => {
   defaultValues : {
    displayName : '',
    bio : '',
-   reports : false
+   reports : false,
+   reminders : false
   }
  });
  const onSubmit : SubmitHandler<z.infer<typeof userOnboardingSchema>> = async(data) => {
@@ -52,20 +53,34 @@ const OnboardingForm = () => {
         )}
       </div>
       <div className='space-y-2'>
-        <Label className='text-lg'>Tell us how motivated you feel getting better.</Label>
+        <Label className='text-lg'>
+          Tell us how motivated you feel getting better.
+        </Label>
         <Textarea
           placeholder='potato'
           className='focus-visible:ring-1 focus-visible:ring-teal-950 ring-1 ring-teal-900'
-          {...register('bio', { required: false})}
+          {...register('bio', { required: false })}
         />
       </div>
-      <div className='flex items-center justify-between space-y-2'>
+      <div className='flex items-center justify-between'>
         <Label className='text-lg'>Get weekly progress reports?</Label>
-        <Switch onCheckedChange={(checked) => setValue('reports', checked)} />
+        <Switch
+          className='data-[state=checked]:bg-teal-800 cursor-pointer'
+          onCheckedChange={(checked) => setValue('reports', checked)}
+        />
+      </div>
+      <div className='flex items-center justify-between'>
+        <Label className='text-lg'>
+          Send me reminders to update my habit trackers
+        </Label>
+        <Switch
+          className='data-[state=checked]:bg-teal-800 cursor-pointer'
+          onCheckedChange={(checked) => setValue('reminders', checked)}
+        />
       </div>
       <div className='flex justify-end w-full'>
         <Button
-          className={`px-4 bg-teal-800 hover:bg-teal-900`}
+          className={`px-4 bg-teal-800 hover:bg-teal-900 cursor-pointer`}
           type='submit'
           disabled={isSubmitting}
         >

@@ -53,6 +53,7 @@ export const handleUserOnboarding = async (
         displayName: data.displayName,
         isOnboarded: true,
         reports: data.reports,
+        reminders : data.reminders
       },
     });
 

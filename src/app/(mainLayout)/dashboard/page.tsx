@@ -8,8 +8,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { validateSession } from '@/lib/auth/validateSession';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { Badge } from '@/components/ui/badge';
-import { Label } from '@/components/ui/label';
 import ActiveHabitTrackerCard from '@/components/Dashboard/ActiveHabitTrackerCard';
 
 const DashboardPage = async () => {

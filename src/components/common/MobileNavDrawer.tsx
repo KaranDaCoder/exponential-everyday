@@ -13,9 +13,14 @@ import { navLinksBottom, navLinksTop } from '@/lib/navinks';
 import HabitDrawer from './HabitDrawer';
 import { Button } from '../ui/button';
 import { signOut } from '@/lib/auth/auth';
+import { validateUserOnboardingStatus } from '@/actions/user';
+import { redirect } from 'next/navigation';
+import { validateSession } from '@/lib/auth/validateSession';
 
 
-const MobileNavDrawer = () => {
+const MobileNavDrawer = async () => {
+  const user = await validateSession();
+
   return (
     <Sheet>
       <SheetTrigger>
@@ -32,7 +37,7 @@ const MobileNavDrawer = () => {
             </span>
           </SheetTitle>
           <aside className='flex flex-col h-full gap-3 p-2'>
-            <div className='flex flex-col items-start justify-start h-3/4 gap-y-4 my-14'>
+            {user.user?.isOnboarded && <div className='flex flex-col items-start justify-start h-3/4 gap-y-4 my-14'>
               {navLinksTop.map((link) => (
                 <SheetClose asChild key={link.label}>
                   <Link
@@ -45,9 +50,9 @@ const MobileNavDrawer = () => {
                 </SheetClose>
               ))}
               <HabitDrawer />
-            </div>
+            </div>}
 
-            <div className='flex flex-col items-start justify-end h-1/4'>
+            <div className='flex flex-col '>
               <Separator />
 
               {navLinksBottom.map((link) => (
@@ -71,7 +76,7 @@ const MobileNavDrawer = () => {
               >
                 <Button
                   variant={'link'}
-                  className='px-4 py-4 text-base font-medium tracking-wider text-teal-900 uppercase bg-white hover:text-teal-700'
+                  className='px-4 py-4 text-base font-medium tracking-wider text-teal-900 uppercase bg-white cursor-pointer hover:text-teal-700 hover:no-underline'
                 >
                   LOGOUT
                 </Button>
