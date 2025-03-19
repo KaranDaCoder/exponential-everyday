@@ -28,7 +28,7 @@ const Sidebar = () => {
         <HabitDrawer />
       </div>
 
-      <div className='flex flex-col items-start justify-end gap-1 h-1/4'>
+      <div className='flex flex-col items-start justify-end gap-4 h-1/4'>
         <Separator />
 
         {navLinksBottom.map((link) => (
@@ -36,7 +36,7 @@ const Sidebar = () => {
           <Link
             href={link.href}
             key={link.href}
-            className='w-full px-4 py-4 tracking-wider text-teal-900 uppercase bg-white'
+            className='px-4 py-2 text-sm tracking-wider text-teal-900 uppercase bg-white w-fit'
           >
             {link.label}
           </Link>

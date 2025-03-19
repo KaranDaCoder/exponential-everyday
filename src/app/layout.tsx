@@ -26,11 +26,14 @@ export default function RootLayout({
         <div className='container px-4 mx-auto overflow-x-hidden lg:px-0'>
           <Navbar />
           {children}
-          <Separator />
-          <div className='flex items-center justify-center h-10 text-sm'>
-            <footer>Footer Content</footer>
+
+          <div className='flex items-center justify-center h-auto mt-4 text-sm'>
+            <footer className="w-full text-center">
+              <Separator />
+              Footer Content
+            </footer>
           </div>
-          <Toaster richColors position="top-right" duration={5000} />
+          <Toaster richColors position='top-right' duration={5000} />
         </div>
       </body>
     </html>

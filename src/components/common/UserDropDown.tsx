@@ -26,16 +26,24 @@ const UserDropDown = ({userImg} : {userImg : string}) => {
             className='w-10 h-10 rounded-full cursor-pointer'
           />
         ) : (
-          <User className='w-10 h-10 p-1 rounded-full border cursor-pointer' />
+          <User className='w-10 h-10 p-1 border rounded-full cursor-pointer' />
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='px-3 py-4'>
         <DropdownMenuItem>
           <Link
             href={'/dashboard'}
-            className='uppercase font-medium tracking-wider'
+            className='font-medium tracking-wider uppercase'
           >
             dashboard
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <Link
+            href={'/my-profile'}
+            className='font-medium tracking-wider uppercase'
+          >
+            My Profile
           </Link>
         </DropdownMenuItem>
         <Separator />
@@ -48,7 +56,7 @@ const UserDropDown = ({userImg} : {userImg : string}) => {
           >
             <Button
               variant={'link'}
-              className='hover:no-underline uppercase font-medium px-0 py-0 hover:text-teal-800 cursor-pointer'
+              className='px-0 py-0 font-medium uppercase cursor-pointer hover:no-underline hover:text-teal-800'
               type='submit'
             >
               Logout
