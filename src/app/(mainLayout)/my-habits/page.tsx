@@ -1,7 +1,7 @@
 import PageHeader from '@/components/common/PageHeader'
 import React from 'react'
 
-const MyHabitsPage = () => {
+const MyHabitsPage = async() => {
   return (
     <div>
       <PageHeader header='Habits' />

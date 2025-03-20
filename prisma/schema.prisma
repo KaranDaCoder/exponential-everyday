@@ -8,40 +8,60 @@ generator client {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String         @id @default(cuid())
   name          String?
-  email         String    @unique
+  email         String         @unique
   emailVerified DateTime?
   image         String?
-  displayName   String?   @db.VarChar(15)
-  isAdmin       Boolean   @default(false)
-  bio           String?   @db.VarChar(250)
-  reports       Boolean   @default(false)
-  reminders     Boolean   @default(false)
-  isOnboarded   Boolean   @default(false)
+  displayName   String?        @db.VarChar(15)
+  isAdmin       Boolean        @default(false)
+  bio           String?        @db.VarChar(250)
+  reports       Boolean        @default(false)
+  reminders     Boolean        @default(false)
+  isOnboarded   Boolean        @default(false)
   accounts      Account[]
   sessions      Session[]
   habits        Habit[]
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  habitTrackers HabitTracker[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 }
 
 model Habit {
-  id           String        @id @unique @default(cuid())
-  category     HabitCategory @default(OTHER)
-  name         String        @db.VarChar(30)
-  description  String?       @db.VarChar(200)
-  start_date   DateTime
-  status       Status        @default(ACTIVE)
-  set_reminder Boolean       @default(false)
-  userId       String
-  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  id            String         @id @unique @default(cuid())
+  category      HabitCategory  @default(OTHER)
+  name          String         @db.VarChar(30)
+  description   String?        @db.VarChar(200)
+  start_date    DateTime
+  status        Status         @default(ACTIVE)
+  userId        String
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  habitTrackers HabitTracker[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 
   @@unique([userId, name])
   @@index([name])
   @@map("habit")
+}
+
+model HabitTracker {
+  id                  String   @id @unique @default(cuid())
+  logged_at           DateTime
+  notes               String?  @db.VarChar(120)
+  daily_difficulty    Decimal  @default(1.00)
+  expected_difficulty Decimal  @default(1.01)
+  status              Status   @default(ACTIVE)
+  userId              String
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  habitId             String
+  habit               Habit    @relation(fields: [habitId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([habitId, logged_at])
+  @@index([logged_at])
 }
 
 enum Status {

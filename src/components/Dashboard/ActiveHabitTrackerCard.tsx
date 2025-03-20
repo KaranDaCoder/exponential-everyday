@@ -3,16 +3,19 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import Link from 'next/link';
 import { Textarea } from '@/components/ui/textarea';
+import { HabitTrackerType } from '@/lib/types/types';
+import { DateTime } from 'luxon';
 
-const ActiveHabitTrackerCard = () => {
+
+const ActiveHabitTrackerCard = ({habitTracker} : {habitTracker : HabitTrackerType}) => {
   return (
-    <div className='flex-none w-3/4 h-auto px-2 py-1 border border-l-4 border-teal-900 rounded-md border-l-teal-700 lg:w-[30%] hover:shadow'>
+    <div className='flex-none w-full h-auto px-2 py-1 border border-l-4 border-teal-900 rounded-md border-l-teal-700 md:w-1/2 lg:w-1/3 hover:shadow'>
       <div className='flex flex-col gap-1'>
         <Link
           href={'/dashboard'}
           className='font-semibold capitalize w-fit hover:text-teal-600'
         >
-          Habit Name in some
+          {habitTracker.habit?.name}
         </Link>
         <Textarea
           placeholder='how did you do today?'
@@ -27,6 +30,7 @@ const ActiveHabitTrackerCard = () => {
             <Label className='text-muted-foreground'>Completed</Label>
             <Switch className='cursor-pointer' />
           </div>
+          <p className='text-sm font-semibold'>{DateTime.fromJSDate(habitTracker.logged_at).toLocaleString()}</p>
         </div>
       </div>
     </div>

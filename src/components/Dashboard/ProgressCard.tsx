@@ -1,8 +1,9 @@
+
 interface IProgressCard {
  bgColor : string,
  count : number,
  total? : number,
- label : string
+ label : string,
 }
 
 const ProgressCard = ({bgColor, count, total, label} : IProgressCard) => {

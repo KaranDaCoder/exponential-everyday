@@ -7,26 +7,28 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer';
+import HabitForm from './HabitForm';
 
 const HabitDrawer = () => {
+
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <span className='flex items-center gap-2 uppercase font-medium tracking-wider cursor-pointer text-teal-900 py-4 px-4'>
+        <span className='flex items-center gap-2 px-4 py-4 font-medium tracking-wider text-teal-900 uppercase cursor-pointer'>
           New Habit
         </span>
       </DrawerTrigger>
-      <DrawerContent className='left-0 top-0 h-5/6 md:w-2/3 lg:w-1/2 xl:w-1/3 w-full bg-white'>
+      <DrawerContent className='top-0 left-0 w-auto h-5/6 md:w-2/3 lg:w-1/2 xl:w-1/3'>
         <DrawerHeader>
-          <DrawerTitle className='text-center uppercase text-muted-foreground'>
+          <DrawerTitle className='text-lg text-center uppercase text-muted-foreground'>
             Create New Habit
           </DrawerTitle>
           {/* Provide an accessible description here */}
-          <DrawerDescription className='text-center font-semibold'>
-            Start creating your new habit by filling in the details below.
+          <DrawerDescription className='font-semibold text-center'>
+            Great Job! Just a few details about your new habit.
           </DrawerDescription>
         </DrawerHeader>
-        {/* <HabitForm /> */}
+        <HabitForm />
       </DrawerContent>
     </Drawer>
   );

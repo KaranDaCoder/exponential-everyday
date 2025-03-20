@@ -38,7 +38,7 @@ export const categories = [
   {
     key: 'HEALTH_FITNESS',
     name: 'health and fitness',
-    icon: <DumbbellIcon />,
+    icon: <DumbbellIcon/>,
   },
   {
     key: 'PERSONAL_GROWTH',
