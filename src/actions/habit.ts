@@ -16,7 +16,7 @@ export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
   let status: 'ACTIVE' | 'UPCOMING' = 'UPCOMING';
   const { start_date } = data;
 
-  const today = DateTime.now().setZone('system').startOf('day').toJSDate();
+  const today = DateTime.now().setZone('system').startOf('day').toUTC().toJSDate();
   if (start_date.getTime() < today.getTime()) return {message : 'start date is in the past', success : false}
     console.log(`IN PROD ${start_date.getTime()}`)
     console.log(`IN PROD ${today.getTime()}`)
