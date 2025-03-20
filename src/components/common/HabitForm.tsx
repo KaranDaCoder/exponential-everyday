@@ -38,7 +38,7 @@ const HabitForm = () => {
       name: '',
       category: HabitCategory.OTHER,
       description: '',
-      start_date: DateTime.now().startOf('day').toJSDate(),
+      start_date: DateTime.now().setZone('system').startOf('day').toJSDate(),
     },
   });
   console.log(errors);
@@ -59,7 +59,9 @@ const HabitForm = () => {
 
   return (
     <form
-      className={`text-teal-800 flex h-full flex-col w-[90%] mx-auto border-2 border-teal-800 rounded-md  px-4 py-4 gap-y-8 mb-9 ${isSubmitting ? 'blur-sm' : 'blur-none'}`}
+      className={`text-teal-800 flex h-full flex-col w-[90%] mx-auto border-2 border-teal-800 rounded-md  px-4 py-4 gap-y-8 mb-9 ${
+        isSubmitting ? 'blur-sm' : 'blur-none'
+      }`}
       onSubmit={handleSubmit(handleCreateHabit)}
     >
       {/* Category */}
@@ -77,7 +79,9 @@ const HabitForm = () => {
           <SelectContent>
             {categories.map((cat) => (
               <SelectItem value={cat.key} key={cat.key}>
-                <span className={`gap-2 capitalize inline-flex items-center text-teal-900 font-medium`}>
+                <span
+                  className={`gap-2 capitalize inline-flex items-center text-teal-900 font-medium`}
+                >
                   {cat.icon} {cat.name}
                 </span>
               </SelectItem>
@@ -128,10 +132,13 @@ const HabitForm = () => {
             <Calendar
               className='text-teal-800'
               mode='single'
-              selected={selected_start_date}
-              onSelect={(selectedDate) => {
-                if (selectedDate) {
-                  setValue('start_date', selectedDate);
+              selected={
+                selected_start_date ? new Date(selected_start_date) : undefined
+              }
+              onSelect={(date) => {
+                if (date) {
+                  const isoDate = date;
+                  setValue('start_date', isoDate); // Update form state
                 }
               }}
               disabled={(day) =>
@@ -151,7 +158,9 @@ const HabitForm = () => {
             {isSubmitting ? 'Creating...' : 'Create Habit'}
           </Button>
           <DrawerClose asChild>
-            <Button className='cursor-pointer' variant='outline'>Cancel</Button>
+            <Button className='cursor-pointer' variant='outline'>
+              Cancel
+            </Button>
           </DrawerClose>
         </div>
       </DrawerFooter>
