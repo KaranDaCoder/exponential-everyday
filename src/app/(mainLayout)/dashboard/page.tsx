@@ -12,11 +12,11 @@ const DashboardPage = async () => {
   const user = await validateSession();
   const { message } = await validateUserOnboardingStatus();
   if (!message) redirect('/onboarding');
-  const [habits, habitTrackers] = await Promise.all([
+  const [habits, habitTrackers, ] = await Promise.all([
       getHabits(),
       allHabitTrackers(),
+      generateHabitTrackers()
     ])
-  await generateHabitTrackers()
 
 
   return (

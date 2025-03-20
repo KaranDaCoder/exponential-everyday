@@ -3,7 +3,7 @@ import Sidebar from '@/components/common/Sidebar';
 
 const MainLayout = ({children} : {children : React.ReactNode}) => {
   return (
-    <main className='flex gap-4 h-[calc(100dvh-8rem)] text-teal-900'>
+    <main className='flex gap-4 h-[calc(100dvh-8rem)] text-teal-800'>
       <div className='lg:min-w-[180px] hidden lg:block overflow-hidden'>
       <Sidebar/>
       </div>

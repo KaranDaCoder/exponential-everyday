@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${montserrat.className} bg-white text-teal-950`}>
+      <body className={`${montserrat.className} bg-white text-teal-800`}>
         <div className='container px-4 mx-auto overflow-x-hidden lg:px-0'>
           <Navbar />
           {children}
