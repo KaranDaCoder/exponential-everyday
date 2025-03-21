@@ -15,8 +15,9 @@ export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
 
   let status: 'ACTIVE' | 'UPCOMING' = 'UPCOMING';
   const { start_date } = data;
-  const today = DateTime.now().startOf('day');
-  const start_date_str = DateTime.fromJSDate(start_date).startOf('day');
+  const today = DateTime.now().startOf("day").setZone("America/Denver");
+  const start_date_str = DateTime.fromJSDate(start_date).startOf("day")
+    .setZone('America/Denver');
   console.log(today);
   console.log(start_date_str);
 
