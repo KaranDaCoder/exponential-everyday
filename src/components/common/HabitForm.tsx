@@ -38,7 +38,7 @@ const HabitForm = () => {
       name: '',
       category: HabitCategory.OTHER,
       description: '',
-      start_date: DateTime.now().setZone('system').startOf('day').toJSDate(),
+      start_date: new Date(),
     },
   });
   console.log(errors);
@@ -137,8 +137,7 @@ const HabitForm = () => {
               }
               onSelect={(date) => {
                 if (date) {
-                  const isoDate = date;
-                  setValue('start_date', isoDate); // Update form state
+                  setValue('start_date', date); // Update form state
                 }
               }}
               disabled={(day) =>
