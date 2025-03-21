@@ -5,7 +5,7 @@ import { db } from '@/lib/db/db';
 import { HabitType } from '@/lib/types/types';
 import { HabitSchema } from '@/lib/zodSchemas';
 import { Status } from '@prisma/client';
-import { DateTime} from 'luxon';
+import { DateTime } from 'luxon';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 
@@ -15,20 +15,20 @@ export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
 
   let status: 'ACTIVE' | 'UPCOMING' = 'UPCOMING';
   const { start_date } = data;
-  const start_date_utc = DateTime.fromJSDate(start_date).toISODate();
-  const today_utc = DateTime.now().toISODate();
-  console.log(`START DATE IN UTC IN VERCEL, ${start_date_utc}`);
-  console.log(`TODAY DATE IN UTC IN VERCEL, ${today_utc}`);
+  const today = DateTime.now().startOf('day');
+  const start_date_str = DateTime.fromJSDate(start_date).startOf('day');
+  console.log(today);
+  console.log(start_date_str);
 
-  console.log(
-    `NEED TO HAVE USERS START DATE AS START DATE IN DB, ${DateTime.fromJSDate(start_date).startOf("day").toJSDate()}`
-  );
-  if (start_date_utc && start_date_utc > today_utc) {
-    console.log('UPCOMING');
+  if (today.equals(start_date_str)) {
+    console.log(`ACTIVE HABIT`);
+    status = Status.ACTIVE;
+  } else if (today < start_date_str) {
+    console.log(`UPCOMING HABIT`);
     status = Status.UPCOMING;
   } else {
-    console.log('ACTIVE');
-    status = Status.ACTIVE;
+    console.log(`HABIT IN PAST/`);
+   return { message: 'invalid date in past', success: false };
   }
   try {
     const isHabitExist = await db.habit.findUnique({
@@ -45,28 +45,23 @@ export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
     const data1 = {
       name: data.name,
       category: data.category,
-      start_date: DateTime.fromJSDate(start_date)
-        .startOf('day')
-        .toJSDate(),
+      start_date: start_date_str.toJSDate(),
       description: data.description,
       userId: user.id,
-      status,
+      status: status,
     };
     console.log(data1);
 
-    //  await db.habit.create({
-    //    data: {
-    //      name: data.name,
-    //      category: data.category,
-    //      start_date: DateTime.fromJSDate(start_date)
-    //        .startOf('day')
-    //        .setZone('system')
-    //        .toJSDate(),
-    //      description: data.description,
-    //      userId: user.id,
-    //      status,
-    //    },
-    //  });
+    await db.habit.create({
+      data: {
+        name: data.name,
+        category: data.category,
+        start_date: start_date_str.toJSDate(),
+        description: data.description,
+        userId: user.id,
+        status: status,
+      },
+    });
     revalidatePath('/dashboard');
     return { message: 'Habit created successfully!', success: true };
   } catch (error) {

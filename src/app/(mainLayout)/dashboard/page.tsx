@@ -5,16 +5,16 @@ import { validateSession } from '@/lib/auth/validateSession';
 import { redirect } from 'next/navigation';
 import { getHabits } from '@/actions/habit';
 import ProgressSection from '@/components/Dashboard/ProgressSection';
-import { allHabitTrackers, generateHabitTrackers } from '@/actions/habitTracker';
-import ActiveHabitTrackerSection from '@/components/Dashboard/ActiveHabitTrackerSection';
+import {  generateHabitTrackers } from '@/actions/habitTracker';
+// import ActiveHabitTrackerSection from '@/components/Dashboard/ActiveHabitTrackerSection';
 
 const DashboardPage = async () => {
   const user = await validateSession();
   const { message } = await validateUserOnboardingStatus();
   if (!message) redirect('/onboarding');
-  const [habits, habitTrackers, ] = await Promise.all([
+  const [habits, , ] = await Promise.all([
       getHabits(),
-      allHabitTrackers(),
+      // allHabitTrackers(),
       generateHabitTrackers()
     ])
 
@@ -33,7 +33,7 @@ const DashboardPage = async () => {
       </div>
 
       {/* ACTIBE HABIT TRACKERS */}
-      <ActiveHabitTrackerSection habitTrackers={habitTrackers?.data || []}/>
+      {/* <ActiveHabitTrackerSection habitTrackers={habitTrackers?.data || []}/> */}
 
       {/* GRAPHS */}
       <div className='border min-h-[12rem]'></div>
