@@ -15,8 +15,8 @@ export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
 
   let status: 'ACTIVE' | 'UPCOMING' = 'UPCOMING';
   const { start_date } = data;
-  const start_date_utc = new Date(start_date).setHours(0,0,0,0)
-  const today_utc = new Date().setHours(0,0,0,0)
+  const start_date_utc = DateTime.fromJSDate(start_date).toISODate();
+  const today_utc = DateTime.now().toISODate();
   console.log(`START DATE IN UTC IN VERCEL, ${start_date_utc}`);
   console.log(`TODAY DATE IN UTC IN VERCEL, ${today_utc}`);
 
@@ -40,6 +40,18 @@ export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
 
     if (isHabitExist)
       return { message: 'Oops! Habit already exists.', success: false };
+    const data1 = {
+      name: data.name,
+      category: data.category,
+      start_date: DateTime.fromJSDate(start_date)
+        .startOf('day')
+        .setZone('system')
+        .toJSDate(),
+      description: data.description,
+      userId: user.id,
+      status,
+    };
+  console.log(data1)
 
      await db.habit.create({
        data: {

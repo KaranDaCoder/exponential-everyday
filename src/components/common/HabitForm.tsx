@@ -132,7 +132,7 @@ const HabitForm = () => {
               className='text-teal-800'
               mode='single'
               selected={
-                selected_start_date ? new Date(selected_start_date) : undefined
+                selected_start_date ? new Date(new Date(selected_start_date).setHours(0, 0, 0, 0)) : undefined
               }
               onSelect={(date) => {
                 if (date) {
