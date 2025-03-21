@@ -5,13 +5,13 @@ import { db } from '@/lib/db/db';
 import { HabitType } from '@/lib/types/types';
 import { HabitSchema } from '@/lib/zodSchemas';
 import { Status } from '@prisma/client';
-import { DateTime } from 'luxon';
+import { DateTime} from 'luxon';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 
 export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
   const { user } = await validateSession();
-  if(!user?.id) return {message : 'user not authenticated' , success : false}
+  if (!user?.id) return { message: 'user not authenticated', success: false };
 
   let status: 'ACTIVE' | 'UPCOMING' = 'UPCOMING';
   const { start_date } = data;
@@ -20,14 +20,16 @@ export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
   console.log(`START DATE IN UTC IN VERCEL, ${start_date_utc}`);
   console.log(`TODAY DATE IN UTC IN VERCEL, ${today_utc}`);
 
-  console.log(`NEED TO HAVE USERS START DATE AS START DATE IN DB, ${DateTime.fromJSDate(start_date).startOf("day").setZone("system").toJSDate()}`)
-    if (start_date_utc === today_utc) {
-      console.log('ACTIVE')
-      status = Status.ACTIVE;
-    } else {
-      console.log('UPCOMING')
-      status = Status.UPCOMING;
-    }
+  console.log(
+    `NEED TO HAVE USERS START DATE AS START DATE IN DB, ${DateTime.fromJSDate(start_date).startOf("day").toJSDate()}`
+  );
+  if (start_date_utc && start_date_utc > today_utc) {
+    console.log('UPCOMING');
+    status = Status.UPCOMING;
+  } else {
+    console.log('ACTIVE');
+    status = Status.ACTIVE;
+  }
   try {
     const isHabitExist = await db.habit.findUnique({
       where: {
@@ -35,7 +37,7 @@ export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
           userId: user.id,
           name: data.name,
         },
-      }
+      },
     });
 
     if (isHabitExist)
@@ -45,27 +47,26 @@ export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
       category: data.category,
       start_date: DateTime.fromJSDate(start_date)
         .startOf('day')
-        .setZone('system')
         .toJSDate(),
       description: data.description,
       userId: user.id,
       status,
     };
-  console.log(data1)
+    console.log(data1);
 
-     await db.habit.create({
-       data: {
-         name: data.name,
-         category: data.category,
-         start_date: DateTime.fromJSDate(start_date)
-           .startOf('day')
-           .setZone('system')
-           .toJSDate(),
-         description: data.description,
-         userId: user.id,
-         status,
-       },
-     });
+    //  await db.habit.create({
+    //    data: {
+    //      name: data.name,
+    //      category: data.category,
+    //      start_date: DateTime.fromJSDate(start_date)
+    //        .startOf('day')
+    //        .setZone('system')
+    //        .toJSDate(),
+    //      description: data.description,
+    //      userId: user.id,
+    //      status,
+    //    },
+    //  });
     revalidatePath('/dashboard');
     return { message: 'Habit created successfully!', success: true };
   } catch (error) {
@@ -74,7 +75,10 @@ export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
   }
 };
 
-export const getHabits = async () : Promise<{success : boolean, message : HabitType[] | null}> => {
+export const getHabits = async (): Promise<{
+  success: boolean;
+  message: HabitType[] | null;
+}> => {
   const { user } = await validateSession();
   try {
     const allHabits = await db.habit.findMany({
@@ -82,20 +86,20 @@ export const getHabits = async () : Promise<{success : boolean, message : HabitT
         userId: user?.id,
       },
       include: {
-        habitTrackers : true
-      }
+        habitTrackers: true,
+      },
     });
     const habits = allHabits.map((habit) => ({
       ...habit,
-      habitTrackers : habit.habitTrackers.map(tracker => ({
+      habitTrackers: habit.habitTrackers.map((tracker) => ({
         ...tracker,
-        daily_difficulty :  tracker.daily_difficulty.toNumber(),
-        expected_difficulty :  tracker.expected_difficulty.toNumber(),
-      }))
+        daily_difficulty: tracker.daily_difficulty.toNumber(),
+        expected_difficulty: tracker.expected_difficulty.toNumber(),
+      })),
     }));
     return { message: habits, success: true };
   } catch (error) {
     console.log(error);
-    return { message: null , success: false };
+    return { message: null, success: false };
   }
 };
