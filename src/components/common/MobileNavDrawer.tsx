@@ -17,7 +17,7 @@ import { validateSession } from '@/lib/auth/validateSession';
 
 
 const MobileNavDrawer = async () => {
-  const user = await validateSession();
+  const {message : user} = await validateSession();
 
   return (
     <Sheet>
@@ -35,7 +35,7 @@ const MobileNavDrawer = async () => {
             </span>
           </SheetTitle>
           <aside className='flex flex-col h-full gap-3 p-2'>
-            {user.user?.isOnboarded && <div className='flex flex-col items-start justify-start h-3/4 gap-y-4 my-14'>
+            {user?.isOnboarded && <div className='flex flex-col items-start justify-start h-3/4 gap-y-4 my-14'>
               {navLinksTop.map((link) => (
                 <SheetClose asChild key={link.label}>
                   <Link

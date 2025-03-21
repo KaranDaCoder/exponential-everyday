@@ -34,7 +34,7 @@ export const allHabitTrackers = async () => {
 
 export const generateHabitTrackers = async () => {
   const today = DateTime.now().startOf('day');
-   const { user } = await validateSession();
+   const { message : user } = await validateSession();
    if (!user?.id) return { message: 'user not authenticated', success: false };
   try {
     // Get all active habits.

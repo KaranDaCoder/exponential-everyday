@@ -43,7 +43,6 @@ export const handleUserOnboarding = async (
     if (!isUserExist) {
       return { message: 'User does not exist', success: false };
     }
-   
     const onboardUser = await db.user.update({
       where: {
         id: session.user?.id,
@@ -53,7 +52,8 @@ export const handleUserOnboarding = async (
         displayName: data.displayName,
         isOnboarded: true,
         reports: data.reports,
-        reminders : data.reminders
+        timezone : data.timezone,
+        reminders: data.reminders,
       },
     });
 
@@ -62,7 +62,10 @@ export const handleUserOnboarding = async (
       success: true,
     };
   } catch (error) {
-   console.log(error)
-    return { message: `Oops! Something went wrong please try again.`, success: false };
+    console.log(error);
+    return {
+      message: `Oops! Something went wrong please try again.`,
+      success: false,
+    };
   }
 };

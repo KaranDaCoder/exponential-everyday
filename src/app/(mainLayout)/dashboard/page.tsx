@@ -5,17 +5,17 @@ import { validateSession } from '@/lib/auth/validateSession';
 import { redirect } from 'next/navigation';
 import { getHabits } from '@/actions/habit';
 import ProgressSection from '@/components/Dashboard/ProgressSection';
-import {  generateHabitTrackers } from '@/actions/habitTracker';
+// import {  generateHabitTrackers } from '@/actions/habitTracker';
 // import ActiveHabitTrackerSection from '@/components/Dashboard/ActiveHabitTrackerSection';
 
 const DashboardPage = async () => {
-  const user = await validateSession();
+  const {message : user} = await validateSession();
   const { message } = await validateUserOnboardingStatus();
   if (!message) redirect('/onboarding');
   const [habits, , ] = await Promise.all([
       getHabits(),
       // allHabitTrackers(),
-      generateHabitTrackers()
+      // generateHabitTrackers()
     ])
 
 
@@ -26,7 +26,7 @@ const DashboardPage = async () => {
       <div className='flex flex-col lg:flex-row lg:gap-6 gap-y-4'>
         {/* WELCOME */}
         <Welcome
-          username={user.user?.displayName ? user.user?.displayName : 'User'}
+          username={user?.displayName  ?? user?.email.split('@')[0] ?? 'undefined'}
         />
         {/* PROGRESS SECTION */}
         <ProgressSection data={habits.message || []} />

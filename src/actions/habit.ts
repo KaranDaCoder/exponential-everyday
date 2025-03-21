@@ -10,18 +10,18 @@ import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 
 export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
-  const { user } = await validateSession();
-  if (!user?.id) return { message: 'user not authenticated', success: false };
+  const { message : user } = await validateSession();
 
   let status: 'ACTIVE' | 'UPCOMING' = 'UPCOMING';
   const { start_date } = data;
-  const today = DateTime.now().startOf("day").setZone("America/Denver");
-  const start_date_str = DateTime.fromJSDate(start_date).startOf("day")
-    .setZone('America/Denver');
+  const today = DateTime.now().setZone(user?.timezone).toJSDate();
+  const start_date_str = DateTime.fromJSDate(start_date).setZone(
+    user?.timezone
+  ).toJSDate();
   console.log(today);
   console.log(start_date_str);
 
-  if (today.equals(start_date_str)) {
+  if (today.setHours(0,0,0,0) === start_date_str.setHours(0,0,0,0)) {
     console.log(`ACTIVE HABIT`);
     status = Status.ACTIVE;
   } else if (today < start_date_str) {
@@ -35,7 +35,7 @@ export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
     const isHabitExist = await db.habit.findUnique({
       where: {
         userId_name: {
-          userId: user.id,
+          userId: user?.id as string,
           name: data.name,
         },
       },
@@ -46,9 +46,9 @@ export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
     const data1 = {
       name: data.name,
       category: data.category,
-      start_date: start_date_str.toJSDate(),
+      start_date: start_date_str,
       description: data.description,
-      userId: user.id,
+      userId: user?.id,
       status: status,
     };
     console.log(data1);
@@ -57,9 +57,9 @@ export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
       data: {
         name: data.name,
         category: data.category,
-        start_date: start_date_str.toJSDate(),
+        start_date: start_date_str,
         description: data.description,
-        userId: user.id,
+        userId: user?.id as string,
         status: status,
       },
     });
@@ -75,7 +75,7 @@ export const getHabits = async (): Promise<{
   success: boolean;
   message: HabitType[] | null;
 }> => {
-  const { user } = await validateSession();
+  const { message : user } = await validateSession();
   try {
     const allHabits = await db.habit.findMany({
       where: {

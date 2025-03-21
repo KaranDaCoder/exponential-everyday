@@ -13,6 +13,7 @@ import { userOnboardingSchema } from '@/lib/zodSchemas';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { LoaderIcon } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 
 
 
@@ -24,7 +25,8 @@ const OnboardingForm = () => {
    displayName : '',
    bio : '',
    reports : false,
-   reminders : false
+   reminders : false,
+   timezone : 'America/Chicago'
   }
  });
  const onSubmit : SubmitHandler<z.infer<typeof userOnboardingSchema>> = async(data) => {
@@ -53,6 +55,31 @@ const OnboardingForm = () => {
         )}
       </div>
       <div className='space-y-2'>
+        <Label className='text-lg'>What is your time zone?</Label>
+        <Select
+        onValueChange={(value) => setValue('timezone' , value)}
+        >
+          <SelectTrigger className='w-full cursor-pointer focus-visible:ring-2 focus-visible:ring-teal-950 ring-1 ring-teal-900'>
+            <SelectValue placeholder={'Central Standard Time (CST)'} />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value='America/Chicago'>
+              Central Standard Time (CST)
+            </SelectItem>
+            <SelectItem value='America/New_York'>
+              Eastern Standard Time (EST)
+            </SelectItem>
+            <SelectItem value='America/Los_Angeles'>
+              Pacific Standard Time (PST)
+            </SelectItem>
+            <SelectItem value='America/Denver'>
+              Mountain Standard Time (MST)
+            </SelectItem>
+            <SelectItem value='India/Kolkata'>India Standard Time (IST)</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <div className='space-y-2'>
         <Label className='text-lg'>
           Tell us how motivated you feel getting better.
         </Label>
@@ -70,9 +97,7 @@ const OnboardingForm = () => {
         />
       </div>
       <div className='flex items-center justify-between'>
-        <Label className='text-base'>
-          Remind me to update habits daily
-        </Label>
+        <Label className='text-base'>Remind me to update habits daily</Label>
         <Switch
           className='data-[state=checked]:bg-teal-800 cursor-pointer'
           onCheckedChange={(checked) => setValue('reminders', checked)}

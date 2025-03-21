@@ -18,6 +18,7 @@ model User {
   bio           String?        @db.VarChar(250)
   reports       Boolean        @default(false)
   reminders     Boolean        @default(false)
+  timezone      String         @default("America/Chicago")
   isOnboarded   Boolean        @default(false)
   accounts      Account[]
   sessions      Session[]

@@ -1,4 +1,4 @@
-import { HabitCategory } from '@prisma/client';
+import { HabitCategory} from '@prisma/client';
 import { z } from 'zod';
 
 export const userOnboardingSchema = z.object({
@@ -21,6 +21,7 @@ export const userOnboardingSchema = z.object({
 
   reports: z.boolean().default(false),
   reminders: z.boolean().default(false),
+  timezone: z.string().default('America/Chicago')
 });
 
 export const HabitSchema = z.object({
