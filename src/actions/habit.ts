@@ -10,38 +10,40 @@ import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 
 export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
-  const { message : user } = await validateSession();
+  const { message: user } = await validateSession();
 
   let status: 'ACTIVE' | 'UPCOMING' = 'UPCOMING';
 
   const { start_date } = data;
-  console.log(`START DATE, ` ,start_date)
-  const today = DateTime.now().setZone(user?.timezone);
-  console.log(user?.timezone)
-  const start_date_str = DateTime.fromJSDate(start_date).setZone(
-    user?.timezone
-  );
-  console.log(today);
-  console.log(`start-date`, start_date_str);
-    console.log(`====`)
-    console.log(today)
-    console.log(start_date_str)
+  console.log(start_date)
 
-  if (today.endOf('day').equals(start_date_str.endOf('day'))) {
-    console.log(`ACTIVE HABIT`);
+  const todayUserTz = DateTime.now().setZone(user?.timezone);
+
+  const startDateUserTz = DateTime.fromJSDate(start_date).setZone(
+    user?.timezone
+  ).startOf('day');
+
+  console.log(todayUserTz)
+  console.log(startDateUserTz)
+  // console.log(todayUserTz.toJSDate())
+  console.log(startDateUserTz.toJSDate())
+ 
+  console.log(todayUserTz.toLocaleString())
+  
+  if (todayUserTz.endOf('day').equals(startDateUserTz.endOf('day'))) {
     status = Status.ACTIVE;
   } else {
-    // Calculate the difference in days between today and the start date
-    const diffDays = start_date_str
+    const diffSec = startDateUserTz
       .endOf('day')
-      .diff(today.endOf('day'), 'seconds').seconds;
+      .diff(todayUserTz.endOf('day'), 'seconds').seconds;
 
-    if (diffDays > 1) {
-      console.log(`UPCOMING HABIT`);
+    if (diffSec > 1) {
       status = Status.UPCOMING;
     } else {
-      console.log(`PAST HABIT`);
-      return {message : `${start_date_str} is in past` , success : false} // Add this case if needed
+      return {
+        message: `${startDateUserTz.toString()} is in past`,
+        success: false,
+      };
     }
   }
   try {
@@ -56,21 +58,11 @@ export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
 
     if (isHabitExist)
       return { message: 'Oops! Habit already exists.', success: false };
-    const data1 = {
-      name: data.name,
-      category: data.category,
-      start_date: start_date_str.setZone(user?.timezone).toJSDate(),
-      description: data.description,
-      userId: user?.id,
-      status: status,
-    };
-    console.log(data1);
-
     await db.habit.create({
       data: {
         name: data.name,
         category: data.category,
-        start_date: start_date_str.setZone(user?.timezone).toJSDate(),
+        start_date: start_date,
         description: data.description,
         userId: user?.id as string,
         status: status,
@@ -88,7 +80,7 @@ export const getHabits = async (): Promise<{
   success: boolean;
   message: HabitType[] | null;
 }> => {
-  const { message : user } = await validateSession();
+  const { message: user } = await validateSession();
   try {
     const allHabits = await db.habit.findMany({
       where: {

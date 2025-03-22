@@ -37,7 +37,7 @@ const HabitForm = () => {
       name: '',
       category: HabitCategory.OTHER,
       description: '',
-      start_date: undefined, // Initialize with null for no date selected
+      start_date: undefined
     },
   });
   console.log(errors);
@@ -137,9 +137,9 @@ const HabitForm = () => {
                   setValue('start_date', date); // Update form state
                 }
               }}
-              disabled={(day) =>
-                day.getTime() < new Date().setHours(0, 0, 0, 0)
-              }
+              // disabled={(day) =>
+              //   day.getTime() < new Date().setHours(0, 0, 0, 0)
+              // }
             />
           </PopoverContent>
         </Popover>
