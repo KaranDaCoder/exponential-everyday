@@ -23,16 +23,26 @@ export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
   );
   console.log(today);
   console.log(`start-date`, start_date_str);
-  
-  if (today.toJSDate().setHours(0,0,0,0) === start_date_str.toJSDate().setHours(0,0,0,0)) {
+    console.log(`====`)
+    console.log(today)
+    console.log(start_date_str)
+
+  if (today.endOf('day').equals(start_date_str.endOf('day'))) {
     console.log(`ACTIVE HABIT`);
     status = Status.ACTIVE;
-  } else if (today < start_date_str) {
-    console.log(`UPCOMING HABIT`);
-    status = Status.UPCOMING;
   } else {
-    console.log(`HABIT IN PAST/`);
-   return { message: 'invalid date in past', success: false };
+    // Calculate the difference in days between today and the start date
+    const diffDays = start_date_str
+      .endOf('day')
+      .diff(today.endOf('day'), 'seconds').seconds;
+
+    if (diffDays > 1) {
+      console.log(`UPCOMING HABIT`);
+      status = Status.UPCOMING;
+    } else {
+      console.log(`PAST HABIT`);
+      return {message : `${start_date_str} is in past` , success : false} // Add this case if needed
+    }
   }
   try {
     const isHabitExist = await db.habit.findUnique({
