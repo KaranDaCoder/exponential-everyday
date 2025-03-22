@@ -13,15 +13,18 @@ export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
   const { message : user } = await validateSession();
 
   let status: 'ACTIVE' | 'UPCOMING' = 'UPCOMING';
+
   const { start_date } = data;
-  const today = DateTime.now().setZone(user?.timezone).toJSDate();
+  console.log(`START DATE, ` ,start_date)
+  const today = DateTime.now().setZone(user?.timezone);
+  console.log(user?.timezone)
   const start_date_str = DateTime.fromJSDate(start_date).setZone(
     user?.timezone
-  ).toJSDate();
+  );
   console.log(today);
-  console.log(start_date_str);
-
-  if (today.setHours(0,0,0,0) === start_date_str.setHours(0,0,0,0)) {
+  console.log(`start-date`, start_date_str);
+  
+  if (today.toJSDate().setHours(0,0,0,0) === start_date_str.toJSDate().setHours(0,0,0,0)) {
     console.log(`ACTIVE HABIT`);
     status = Status.ACTIVE;
   } else if (today < start_date_str) {
@@ -46,7 +49,7 @@ export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
     const data1 = {
       name: data.name,
       category: data.category,
-      start_date: start_date_str,
+      start_date: start_date_str.setZone(user?.timezone).toJSDate(),
       description: data.description,
       userId: user?.id,
       status: status,
@@ -57,7 +60,7 @@ export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
       data: {
         name: data.name,
         category: data.category,
-        start_date: start_date_str,
+        start_date: start_date_str.setZone(user?.timezone).toJSDate(),
         description: data.description,
         userId: user?.id as string,
         status: status,

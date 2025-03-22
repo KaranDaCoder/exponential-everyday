@@ -75,7 +75,7 @@ const OnboardingForm = () => {
             <SelectItem value='America/Denver'>
               Mountain Standard Time (MST)
             </SelectItem>
-            <SelectItem value='India/Kolkata'>India Standard Time (IST)</SelectItem>
+            <SelectItem value='Asia/Calcutta'>India Standard Time (IST)</SelectItem>
           </SelectContent>
         </Select>
       </div>

@@ -21,7 +21,7 @@ const DashboardPage = async () => {
 
   return (
     <div className='space-y-4'>
-      <PageHeader header='Dashboard' />
+      <PageHeader header='Dashboard' userTz={user?.timezone || 'America/Chicago'}/>
 
       <div className='flex flex-col lg:flex-row lg:gap-6 gap-y-4'>
         {/* WELCOME */}

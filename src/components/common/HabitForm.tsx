@@ -37,7 +37,7 @@ const HabitForm = () => {
       name: '',
       category: HabitCategory.OTHER,
       description: '',
-      start_date: new Date(),
+      start_date: undefined, // Initialize with null for no date selected
     },
   });
   console.log(errors);
@@ -124,16 +124,14 @@ const HabitForm = () => {
           >
             <Button variant={'outline'}>
               <CalendarIcon />
-              {selected_start_date.toLocaleDateString()}
+              {selected_start_date ? selected_start_date.toLocaleDateString() : 'Pick habit start date'}
             </Button>
           </PopoverTrigger>
           <PopoverContent className='w-full border border-teal-900 rounded-md'>
             <Calendar
               className='text-teal-800'
               mode='single'
-              selected={
-                selected_start_date ? new Date(selected_start_date) : undefined
-              }
+              selected={selected_start_date ? selected_start_date : undefined}
               onSelect={(date) => {
                 if (date) {
                   setValue('start_date', date); // Update form state
@@ -145,6 +143,9 @@ const HabitForm = () => {
             />
           </PopoverContent>
         </Popover>
+        {errors.start_date && (
+          <p className='text-sm text-red-500'>oops! you forgot to select habit start date</p>
+        )}
       </div>
       <DrawerFooter>
         <div className='flex flex-row-reverse justify-between'>

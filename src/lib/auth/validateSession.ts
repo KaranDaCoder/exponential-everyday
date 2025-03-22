@@ -10,3 +10,4 @@ export const validateSession = async() => {
     const userInfo = await db.user.findUnique({where : {id : user.user.id}})
    return {message : userInfo , success : true};
 }
+

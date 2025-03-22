@@ -9,7 +9,7 @@ import {
 import { AlignRightIcon } from 'lucide-react';
 import { Separator } from '../ui/separator';
 import Link from 'next/link';
-import { navLinksBottom, navLinksTop } from '@/lib/navinks';
+import { navLinksBottom, navLinksTop } from '@/lib/static_data/navinks';
 import HabitDrawer from './HabitDrawer';
 import { Button } from '../ui/button';
 import { signOut } from '@/lib/auth/auth';

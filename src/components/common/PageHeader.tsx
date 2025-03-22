@@ -1,12 +1,12 @@
 import { DateTime } from 'luxon';
 import React from 'react'
 
-const PageHeader = ({header} : {header : string}) => {
+const PageHeader = ({header, userTz} : {header : string , userTz : string}) => {
   return (
     <section className='flex items-center justify-between w-full py-3 mt-2 space-x-2 text-teal-900 '>
       <h1 className='text-xl font-light '>{header}.</h1>
       <h2 className='text-sm font-semibold text-muted-foreground'>
-        {DateTime.now().toUTC().toLocaleString()}
+        {DateTime.now().setZone(userTz).toLocaleString(DateTime.DATE_MED)}
       </h2>
     </section>
   );

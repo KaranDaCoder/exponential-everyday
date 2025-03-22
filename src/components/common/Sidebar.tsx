@@ -1,7 +1,7 @@
 'use client';
 import HabitDrawer from '@/components/common/HabitDrawer';
 import { Separator } from '@/components/ui/separator';
-import { navLinksBottom, navLinksTop } from '@/lib/navinks';
+import { navLinksBottom, navLinksTop } from '@/lib/static_data/navinks';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
