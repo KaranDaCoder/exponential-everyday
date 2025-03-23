@@ -96,6 +96,7 @@ const HabitForm = () => {
           className='focus-visible:ring-1 focus-visible:ring-teal-950 ring-0 ring-teal-900'
           placeholder='e.g : I will shower everyday'
           {...register('name')}
+         
         />
         {errors.name && (
           <p className='text-sm text-red-500'>{errors.name.message}</p>
@@ -124,7 +125,7 @@ const HabitForm = () => {
           >
             <Button variant={'outline'}>
               <CalendarIcon />
-              {selected_start_date ? selected_start_date.toLocaleDateString() : 'Pick habit start date'}
+              {selected_start_date ? selected_start_date.toLocaleDateString() : 'Pick a date'}
             </Button>
           </PopoverTrigger>
           <PopoverContent className='w-full border border-teal-900 rounded-md'>
@@ -137,9 +138,6 @@ const HabitForm = () => {
                   setValue('start_date', date); // Update form state
                 }
               }}
-              // disabled={(day) =>
-              //   day.getTime() < new Date().setHours(0, 0, 0, 0)
-              // }
             />
           </PopoverContent>
         </Popover>

@@ -12,40 +12,33 @@ import { z } from 'zod';
 export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
   const { message: user } = await validateSession();
 
-  let status: 'ACTIVE' | 'UPCOMING' = 'UPCOMING';
-
+  let status: 'ACTIVE' | 'UPCOMING' | 'INVALID' = 'UPCOMING'; // Default to 'UPCOMING'
   const { start_date } = data;
-  console.log(start_date)
 
-  const todayUserTz = DateTime.now().setZone(user?.timezone);
-
-  const startDateUserTz = DateTime.fromJSDate(start_date).setZone(
-    user?.timezone
-  ).startOf('day');
-
-  console.log(todayUserTz)
-  console.log(startDateUserTz)
-  // console.log(todayUserTz.toJSDate())
-  console.log(startDateUserTz.toJSDate())
- 
-  console.log(todayUserTz.toLocaleString())
-  
-  if (todayUserTz.endOf('day').equals(startDateUserTz.endOf('day'))) {
+  if (
+    DateTime.now()
+      .setZone(user?.timezone)
+      .hasSame(DateTime.fromJSDate(start_date), 'day')
+  ) {
     status = Status.ACTIVE;
+    console.log(status);
+    console.log(start_date);
   } else {
-    const diffSec = startDateUserTz
-      .endOf('day')
-      .diff(todayUserTz.endOf('day'), 'seconds').seconds;
-
-    if (diffSec > 1) {
+    const daysDiff = DateTime.fromJSDate(start_date).diff(
+      DateTime.now().setZone(user?.timezone),
+      'days'
+    ).days;
+    if (daysDiff > 0) {
       status = Status.UPCOMING;
+      console.log(status);
+      console.log(start_date);
     } else {
-      return {
-        message: `${startDateUserTz.toString()} is in past`,
-        success: false,
-      };
+      console.log(`INVALID START DATE`);
+      console.log(start_date);
+      return {message : `Start Date Cannot be in past, ${start_date}`, success : false}
     }
   }
+
   try {
     const isHabitExist = await db.habit.findUnique({
       where: {
@@ -58,21 +51,25 @@ export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
 
     if (isHabitExist)
       return { message: 'Oops! Habit already exists.', success: false };
-    await db.habit.create({
-      data: {
-        name: data.name,
-        category: data.category,
-        start_date: start_date,
-        description: data.description,
-        userId: user?.id as string,
-        status: status,
-      },
-    });
-    revalidatePath('/dashboard');
-    return { message: 'Habit created successfully!', success: true };
+
+      await db.habit.create({
+        data: {
+          name: data.name,
+          category: data.category,
+          start_date: start_date,
+          description: data.description,
+          userId: user?.id as string,
+          status: status,
+        },
+      });
+      revalidatePath('/dashboard');
+    return {
+      message: 'Habit created successfully!',
+      success: true,
+    };
   } catch (error) {
-    console.log(error);
-    return { message: 'something went wrong', success: false };
+    console.log('Error while creating habit:', error);
+    return { message: 'Something went wrong', success: false };
   }
 };
 
