@@ -5,6 +5,7 @@ import { validateSession } from '@/lib/auth/validateSession';
 import { redirect } from 'next/navigation';
 import { getHabits } from '@/actions/habit';
 import ProgressSection from '@/components/Dashboard/ProgressSection';
+import { generateHabitTrackers } from '@/actions/habitTracker';
 // import {  generateHabitTrackers } from '@/actions/habitTracker';
 // import ActiveHabitTrackerSection from '@/components/Dashboard/ActiveHabitTrackerSection';
 
@@ -15,7 +16,7 @@ const DashboardPage = async () => {
   const [habits, , ] = await Promise.all([
       getHabits(),
       // allHabitTrackers(),
-      // generateHabitTrackers()
+      generateHabitTrackers()
     ])
 
 

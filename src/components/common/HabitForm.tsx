@@ -22,6 +22,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { categories } from '@/lib/static_data/category';
 import { createNewHabit } from '@/actions/habit';
 import { toast } from 'sonner';
+import { DateTime } from 'luxon';
 
 const HabitForm = () => {
   const {
@@ -138,6 +139,7 @@ const HabitForm = () => {
                   setValue('start_date', date); // Update form state
                 }
               }}
+              fromDate={DateTime.now().toJSDate()}
             />
           </PopoverContent>
         </Popover>
