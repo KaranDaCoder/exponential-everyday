@@ -59,7 +59,7 @@ const HabitForm = () => {
 
   return (
     <form
-      className={`text-teal-800 flex h-full flex-col w-[90%] mx-auto border-2 border-teal-800 rounded-md  px-4 py-4 gap-y-8 mb-9 ${
+      className={`flex h-full flex-col w-[90%] mx-auto border-2 border-teal-800 rounded-md  px-4 py-4 gap-y-8 mb-9 ${
         isSubmitting ? 'blur-sm' : 'blur-none'
       }`}
       onSubmit={handleSubmit(handleCreateHabit)}
@@ -80,7 +80,7 @@ const HabitForm = () => {
             {categories.map((cat) => (
               <SelectItem value={cat.key} key={cat.key}>
                 <span
-                  className={`gap-2 capitalize inline-flex items-center text-teal-900 font-medium`}
+                  className={`gap-2 capitalize inline-flex items-center font-medium`}
                 >
                   {cat.icon} {cat.name}
                 </span>

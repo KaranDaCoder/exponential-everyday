@@ -6,6 +6,7 @@ import { db } from '@/lib/db/db';
 import { HabitTrackerType } from '@/lib/types/types';
 import { Decimal } from '@prisma/client/runtime/library';
 import { DateTime } from 'luxon';
+import { use } from 'react';
 
 export const allHabitTrackers = async () => {
   const session = await auth();
@@ -35,7 +36,8 @@ export const allHabitTrackers = async () => {
 export const generateHabitTrackers = async () => {
   const { message : user } = await validateSession();
   
-  const today = DateTime.now().setZone(user?.timezone).startOf('day');
+  const today = DateTime.now().setZone(user?.timezone);
+ 
    if (!user?.id) return { message: 'user not authenticated', success: false };
   try {
     // Get all active habits.
@@ -48,18 +50,19 @@ export const generateHabitTrackers = async () => {
     const trackerArr: HabitTrackerType[] = [];
 
     activeHabits.forEach((habit) => {
-      const startDate = DateTime.fromJSDate(habit.start_date).startOf('day');
-      const diff = today.diff(startDate, 'days').days + 1; // Include today
+      const startDate = DateTime.fromJSDate(habit.start_date);
+         const daysDiff = Math.abs(DateTime.now().setZone(user.timezone).diff(DateTime.fromJSDate(habit.start_date).setZone(user.timezone), 'days').days);
+         console.log(daysDiff)
 
-      for (let i = 0; i < diff; i++) {
-        trackerArr.push({
-          logged_at: startDate.plus({ days: i }).toJSDate(),
-          status: habit.status,
-          userId: habit.userId,
-          habitId: habit.id,
-          daily_difficulty: new Decimal(1.0).toNumber(),
-          expected_difficulty: new Decimal(Math.pow(1.01, i + 1)).toNumber(),
-        });
+      for (let i = 0; i <= daysDiff; i++) {
+          trackerArr.push({
+            logged_at: startDate.plus({ days: i }).toJSDate(),
+            status: habit.status,
+            userId: habit.userId,
+            habitId: habit.id,
+            daily_difficulty: new Decimal(1.0).toNumber(),
+            expected_difficulty: new Decimal(Math.pow(1.01, i + 1)).toNumber(),
+          });
       }
     });
 

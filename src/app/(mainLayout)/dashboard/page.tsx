@@ -5,8 +5,8 @@ import { validateSession } from '@/lib/auth/validateSession';
 import { redirect } from 'next/navigation';
 import { getHabits } from '@/actions/habit';
 import ProgressSection from '@/components/Dashboard/ProgressSection';
-import { generateHabitTrackers } from '@/actions/habitTracker';
-// import {  generateHabitTrackers } from '@/actions/habitTracker';
+// import { generateHabitTrackers } from '@/actions/habitTracker';
+import {  allHabitTrackers, generateHabitTrackers } from '@/actions/habitTracker';
 // import ActiveHabitTrackerSection from '@/components/Dashboard/ActiveHabitTrackerSection';
 
 const DashboardPage = async () => {
@@ -15,7 +15,7 @@ const DashboardPage = async () => {
   if (!message) redirect('/onboarding');
   const [habits, , ] = await Promise.all([
       getHabits(),
-      // allHabitTrackers(),
+      allHabitTrackers(),
       generateHabitTrackers()
     ])
 

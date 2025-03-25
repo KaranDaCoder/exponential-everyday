@@ -17,8 +17,8 @@ const Sidebar = () => {
             href={link.href}
             className={`py-4 uppercase  w-full px-4 tracking-wider ${
               pathName === link.href.toLowerCase()
-                ? 'bg-teal-900 text-teal-50 font-light hover:text-teal-400'
-                : 'bg-white text-teal-900 font-medium hover:text-teal-700'
+                ? 'bg-teal-900 text-teal-50 font-light hover:text-teal-600'
+                : 'bg-white font-medium hover:text-teal-700'
             }  rounded-md transition-all`}
             key={link.label}
           >

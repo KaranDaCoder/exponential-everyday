@@ -63,7 +63,7 @@ export const categories = [
   {
     key: 'FINANCES',
     name: 'finances and money management',
-    icon: <DollarSignIcon />,
+    icon: <DollarSignIcon/>,
   },
   {
     key: 'SUSTAINABILITY',

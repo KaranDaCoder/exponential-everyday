@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { Textarea } from '@/components/ui/textarea';
 import { HabitTrackerType } from '@/lib/types/types';
 import { DateTime } from 'luxon';
+import { reduceCategory } from '@/lib/static_data/category';
+import { HabitCategory } from '@prisma/client';
 
 
 const ActiveHabitTrackerCard = ({habitTracker} : {habitTracker : HabitTrackerType}) => {
@@ -17,6 +19,9 @@ const ActiveHabitTrackerCard = ({habitTracker} : {habitTracker : HabitTrackerTyp
         >
           {habitTracker.habit?.name}
         </Link>
+         <div className='flex items-center w-full gap-1'>
+          {habitTracker.habit?.category && reduceCategory[habitTracker.habit?.category].icon}
+        </div>
         <Textarea
           placeholder='how did you do today?'
           className='px-1 py-1 text-sm focus-visible:ring-1 focus-visible:ring-teal-950 ring-1 ring-teal-900'

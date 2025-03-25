@@ -22,7 +22,11 @@ const MobileNavDrawer = async () => {
   return (
     <Sheet>
       <SheetTrigger>
-        <AlignRightIcon className='cursor-pointer' />
+        <AlignRightIcon
+          className='cursor-pointer'
+          aria-describedby='open mobile navigation drawer'
+          aria-label='toggle nav drawer'
+        />
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
@@ -35,20 +39,22 @@ const MobileNavDrawer = async () => {
             </span>
           </SheetTitle>
           <aside className='flex flex-col h-full gap-3 p-2'>
-            {user?.isOnboarded && <div className='flex flex-col items-start justify-start h-3/4 gap-y-4 my-14'>
-              {navLinksTop.map((link) => (
-                <SheetClose asChild key={link.label}>
-                  <Link
-                    href={link.href}
-                    className={`py-4 uppercase  w-full px-4 tracking-wider bg-white text-teal-900 font-medium hover:text-teal-700`}
-                    key={link.label}
-                  >
-                    {link.label.toUpperCase()}
-                  </Link>
-                </SheetClose>
-              ))}
-              <HabitDrawer />
-            </div>}
+            {user?.isOnboarded && (
+              <div className='flex flex-col items-start justify-start h-3/4 gap-y-4 my-14'>
+                {navLinksTop.map((link) => (
+                  <SheetClose asChild key={link.label}>
+                    <Link
+                      href={link.href}
+                      className={`py-4 uppercase  w-full px-4 tracking-wider bg-white text-teal-900 font-medium hover:text-teal-700`}
+                      key={link.label}
+                    >
+                      {link.label.toUpperCase()}
+                    </Link>
+                  </SheetClose>
+                ))}
+                <HabitDrawer />
+              </div>
+            )}
 
             <div className='flex flex-col '>
               <Separator />

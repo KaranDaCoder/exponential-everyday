@@ -8,6 +8,7 @@ import { Status } from '@prisma/client';
 import { DateTime } from 'luxon';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
+import { generateHabitTrackers } from './habitTracker';
 
 export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
   const { message: user } = await validateSession();
@@ -15,6 +16,8 @@ export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
   let status: 'ACTIVE' | 'UPCOMING' | 'INVALID' = 'UPCOMING'; // Default to 'UPCOMING'
   const { start_date } = data;
 
+  const isParsed = HabitSchema.safeParse(data);
+  if(!isParsed.success) return {message: `${isParsed.error.message}` , success : false}
   if (
     DateTime.now()
       .setZone(user?.timezone)
@@ -35,7 +38,7 @@ export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
     } else {
       console.log(`INVALID START DATE`);
       console.log(start_date);
-      return {message : `Start Date Cannot be in past, ${start_date}`, success : false}
+      return {message : `Start Date Cannot be in past, ${start_date.toLocaleDateString()}`, success : false}
     }
   }
 
@@ -62,6 +65,7 @@ export const createNewHabit = async (data: z.infer<typeof HabitSchema>) => {
           status: status,
         },
       });
+      await generateHabitTrackers();
       revalidatePath('/dashboard');
     return {
       message: 'Habit created successfully!',
@@ -85,6 +89,7 @@ export const getHabits = async (): Promise<{
       },
       include: {
         habitTrackers: true,
+        user : true
       },
     });
     const habits = allHabits.map((habit) => ({

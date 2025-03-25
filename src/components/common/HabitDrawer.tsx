@@ -8,15 +8,21 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer';
 import HabitForm from './HabitForm';
+import { Button } from '../ui/button';
 
 const HabitDrawer = () => {
   
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <span className='flex items-center gap-2 px-4 py-4 font-medium tracking-wider text-teal-900 uppercase cursor-pointer'>
+        <Button
+          variant={'link'}
+          className='text-[16px] px-4 mt-4 font-medium tracking-wider uppercase cursor-pointer hover:no-underline text-teal-800'
+          aria-describedby='Creating New Habit'
+          aria-label='toggle habit drawer'
+        >
           New Habit
-        </span>
+        </Button>
       </DrawerTrigger>
       <DrawerContent className='top-0 left-0 w-auto h-5/6 md:w-2/3 lg:w-1/2 xl:w-1/3'>
         <DrawerHeader>
