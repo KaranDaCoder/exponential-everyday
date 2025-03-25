@@ -6,7 +6,6 @@ import { db } from '@/lib/db/db';
 import { HabitTrackerType } from '@/lib/types/types';
 import { Decimal } from '@prisma/client/runtime/library';
 import { DateTime } from 'luxon';
-import { use } from 'react';
 
 export const allHabitTrackers = async () => {
   const session = await auth();
@@ -36,7 +35,7 @@ export const allHabitTrackers = async () => {
 export const generateHabitTrackers = async () => {
   const { message : user } = await validateSession();
   
-  const today = DateTime.now().setZone(user?.timezone);
+  // const today = DateTime.now().setZone(user?.timezone);
  
    if (!user?.id) return { message: 'user not authenticated', success: false };
   try {

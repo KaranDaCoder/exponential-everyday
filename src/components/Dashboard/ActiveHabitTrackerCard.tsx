@@ -6,7 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { HabitTrackerType } from '@/lib/types/types';
 import { DateTime } from 'luxon';
 import { reduceCategory } from '@/lib/static_data/category';
-import { HabitCategory } from '@prisma/client';
+// import { HabitCategory } from '@prisma/client';
 
 
 const ActiveHabitTrackerCard = ({habitTracker} : {habitTracker : HabitTrackerType}) => {
